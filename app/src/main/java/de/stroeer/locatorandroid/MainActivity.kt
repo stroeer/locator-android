@@ -1,0 +1,65 @@
+package de.stroeer.locatorandroid
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Toast
+import de.stroeer.locator_android.Event
+import de.stroeer.locator_android.EventType
+import de.stroeer.locator_android.LocationHelper
+import de.stroeer.locator_android.LocationPermissionRationaleMessage
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        btn_get_location.setOnClickListener {
+            startLocationDiscoveryProcess()
+        }
+    }
+
+    private fun startLocationDiscoveryProcess() {
+        val permissionRationale = getLocationPermissionRationale()
+        LocationHelper.getCurrentLocation(this, permissionRationale) { locationEvent ->
+            when (locationEvent) {
+                is Event.Location -> handleLocationEvent(locationEvent)
+                is Event.Permission -> handlePermissionEvent(locationEvent)
+            }
+        }
+    }
+
+    private fun getLocationPermissionRationale() = LocationPermissionRationaleMessage(
+        getString(R.string.error_location_disabled_short),
+        getString(R.string.error_location_disabled),
+        getString(R.string.error_location_disabled_goto_settings),
+        getString(R.string.error_location_disabled_cancel)
+    )
+
+    private fun handlePermissionEvent(permissionEvent: Event.Permission) {
+        when (permissionEvent.event) {
+            EventType.LOCATION_PERMISSION_GRANTED -> {
+                showToast("Permission granted")
+            }
+            EventType.LOCATION_PERMISSION_NOT_GRANTED -> {
+                showToast("Permission NOT granted")
+            }
+            EventType.LOCATION_PERMISSION_NOT_GRANTED_PERMANENTLY -> {
+                showToast("Permission NOT granted permanently")
+            }
+        }
+    }
+
+    private fun handleLocationEvent(locationEvent: Event.Location) {
+        if (locationEvent.locationData == null) {
+            showToast("Location not found")
+        } else {
+            showToast("${locationEvent.locationData?.latitude} : ${locationEvent.locationData?.longitude}")
+        }
+    }
+
+    private fun  showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    }
+}

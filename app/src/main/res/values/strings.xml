@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LocatorAndroid</string>
+    <string name="error_location_not_found">Ihr Standort konnte nicht gefunden werden.</string>
+    <string name="error_location_disabled_short">Standortbestimmung deaktiviert</string>
+    <string name="error_location_still_disabled">Standortbestimmung weiterhin deaktiviert</string>
+    <string name="error_location_disabled">Die Standortbestimmung ist auf Ihrem Gerät deaktiviert. Sie können dies unter Einstellungen ändern.</string>
+    <string name="error_location_disabled_cancel">Abbrechen</string>
+    <string name="error_location_disabled_goto_settings">Einstellungen</string>
+    <string name="hide">Ausblenden</string>
+</resources>
