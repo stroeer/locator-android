@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import de.stroeer.locator_android.Event
 import de.stroeer.locator_android.EventType
-import de.stroeer.locator_android.LocationHelper
+import de.stroeer.locator_android.Locator
 import de.stroeer.locator_android.LocationPermissionRationaleMessage
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationDiscoveryProcess() {
         val permissionRationale = getLocationPermissionRationale()
-        LocationHelper.getCurrentLocation(this, permissionRationale) { locationEvent ->
+        Locator.getCurrentLocation(this, permissionRationale) { locationEvent ->
             when (locationEvent) {
                 is Event.Location -> handleLocationEvent(locationEvent)
                 is Event.Permission -> handlePermissionEvent(locationEvent)
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             EventType.LOCATION_PERMISSION_NOT_GRANTED -> {
                 showToast("Permission NOT granted")
             }
-            EventType.LOCATION_PERMISSION_NOT_GRANTED_PERMANENTLY -> {
+            EventType.LOCATION_DISABLED_ON_DEVICE -> {
                 showToast("Permission NOT granted permanently")
             }
         }

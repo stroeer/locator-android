@@ -52,7 +52,7 @@ class LocationProvider(
                 eventCallback(Event.Permission(EventType.LOCATION_PERMISSION_NOT_GRANTED))
             }
             LocationPermissionEvent.LOCATION_STILL_DISABLED -> {
-                eventCallback(Event.Permission(EventType.LOCATION_PERMISSION_NOT_GRANTED_PERMANENTLY))
+                eventCallback(Event.Permission(EventType.LOCATION_DISABLED_ON_DEVICE))
             }
         }
     }
