@@ -23,7 +23,7 @@ Define text for getting permissions:
 Inside your Kotlin file:
 
 ```kotlin
-    LocationHelper.getCurrentLocation(this, permissionRationale) { locationEvent ->
+    Locator.getCurrentLocation(this, permissionRationale) { locationEvent ->
         when (locationEvent) {
             is Event.Location -> handleLocationEvent(locationEvent)
             is Event.Permission -> handlePermissionEvent(locationEvent)
@@ -55,7 +55,7 @@ private fun handlePermissionEvent(permissionEvent: Event.Permission) {
                onLocationDisabled()
             }
 
-           EventType.LOCATION_PERMISSION_NOT_GRANTED_PERMANENTLY -> {
+           EventType.LOCATION_DISABLED_ON_DEVICE -> {
                 onLocationStillDisabled()
             }
         }
