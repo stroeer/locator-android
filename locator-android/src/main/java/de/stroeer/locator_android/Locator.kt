@@ -14,10 +14,10 @@ sealed class Event {
 enum class EventType {
     LOCATION_PERMISSION_GRANTED,
     LOCATION_PERMISSION_NOT_GRANTED,
-    LOCATION_PERMISSION_NOT_GRANTED_PERMANENTLY
+    LOCATION_DISABLED_ON_DEVICE
 }
 
-object LocationHelper {
+object Locator {
 
     private lateinit var locationProvider: LocationProvider
 
@@ -33,7 +33,7 @@ object LocationHelper {
                                      eventCallback: (Event) -> Unit,
                                      locationPermissionRationaleMessage: LocationPermissionRationaleMessage?
     ) {
-        if (!LocationHelper::locationProvider.isInitialized) {
+        if (!Locator::locationProvider.isInitialized) {
             val locationProviderType = if (isGooglePlayServicesAvailable(activity)) LocationDelegate.GOOGLE else LocationDelegate.HUAWEI
             locationProvider = LocationProvider(activity, eventCallback, locationProviderType, locationPermissionRationaleMessage)
         }
