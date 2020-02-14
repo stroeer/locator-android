@@ -7,36 +7,58 @@ This lib is an easy way to get the location inside Android applications. The new
 Handling locations is complex. This lib handles all known use cases on Android devices, when trying to get the location.
 
 ### S1 - success szenario
-Gegeben: Keine Standortberechtigung erteilt
-Sobald der Nutzer den auf Screen “Standorteinstellungen” geht, wird der Berechtigungsdialog angezeigt
-Berechtigung wird akzeptiert
-Es wird nach Standort gesucht, währenddessen erscheint ein Ladebalken
-Der aktuelle Standort konnte gefunden werden
-Aktueller Standort wird übernommen
+
+Given: No location permission granted
+
+Permission dialog becomes visible.
+
+User grants permission.
+
+Location search starts and a progress indicator appears.
+
+The current location __is__ found.
+
+The location can be used inside application.
 
 ### S2 - location not found
-Gegeben: Keine Standortberechtigung erteilt und Nutzer ist auf Screen “Standorteinstellungen”
-Sobald der Nutzer den auf Screen “Standorteinstellungen” geht, wird der Berechtigungsdialog angezeigt
-Berechtigung wird akzeptiert
-Es wird nach Standort gesucht, währenddessen erscheint ein Ladebalken
-Der aktuelle Standort konnte nicht gefunden werden
-Standort bleibt unverändert + Anzeige Fehlermeldung als Snackbar-Meldung “Ihr Standort konnte nicht gefunden werden.”
 
-### S3 - location permission declined
-Gegeben: Keine Standortberechtigung erteilt und Nutzer ist auf Screen “Standorteinstellungen”
-Sobald der Nutzer den auf Screen “Standorteinstellungen” geht, wird der Berechtigungsdialog angezeigt
-Berechtigung wird nicht akzeptiert
-Standort bleibt unverändert + keine Fehlermeldung anzeigen
+Given: No location permission granted
+
+Permission dialog becomes visible.
+
+User grants permission.
+
+Location search starts and a progress indicator appears.
+
+The current location __cannot__ be found.
+
+The location cannot be used inside application.
+
+### S3 - location permission denied
+
+Given: No location permission granted
+
+Permission dialog becomes visible.
+
+User denies permission.
+
+The location cannot be used inside application.
 
 ### S4 - location authorisation is later revoked
-Gegeben: Standortberechtigung bereits erteilt, aber anschließend wieder entzogen
-Sobald der Nutzer den auf Screen “Standorteinstellungen” geht, wird der Berechtigungsdialog angezeigt
-Berechtigungsdialog soll erneut angezeigt werden, danach S1/S2/S3
+
+Given: Location permission granted before, but was later revoked via app settings
+
+Permission dialog becomes visible again.
+
+Next: either S1, S2, or S3
 
 ### S5 - location has been deactivated throughout the OS
-Gegeben: Die Standortbestimmung auf dem Gerät ist deaktiviert
-Standarddialog: “Die Standortbestimmung ist auf Ihrem Gerät deaktiviert. Sie können dies unter Einstellungen ändern.” mit Buttons “Abbrechen” und “Einstellungen”
-Verlinkung zu Einstellungsseite “Standort” im OS
+
+Given: Location detection is disabled on device.
+
+Message becomes visible, that location detection is disabled and a link to OS settings can be clicked.
+
+The location cannot be used inside application.
 
 ## Integration steps
 
@@ -101,7 +123,7 @@ background, you need to apply for the `ACCESS_BACKGROUND_LOCATION` permission in
 2. Ask for permissions and handle permisson, device state, and location events
 
 Define text resources when asking the user for permissions:
-=======
+
 This lib is an easy way to get the location inside Android applications. The new thing about it, it either uses Google Play Services (if installed) or Huawei Mobile Services.
 
 ## Integration steps
