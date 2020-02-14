@@ -99,7 +99,7 @@ class HuaweiSearchDelegate(val activity: Activity,
     }
 
     private fun isLocationDisabled(): Boolean {
-        val locationService = activity.getSystemService(Context.LOCATION_SERVICE) ?: return false
+        val locationService = activity.getSystemService(Context.LOCATION_SERVICE) ?: return true
         val locationManager = locationService as LocationManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             !locationManager.isLocationEnabled
