@@ -17,12 +17,11 @@ enum class EventType {
     LOCATION_DISABLED_ON_DEVICE
 }
 
-object Locator {
+class Locator(val activity: AppCompatActivity) {
 
     private lateinit var locationProvider: LocationProvider
 
-    fun getCurrentLocation(activity: AppCompatActivity,
-                           rationale: LocationPermissionRationaleMessage? = null,
+    fun getCurrentLocation(rationale: LocationPermissionRationaleMessage? = null,
                            eventCallback: (Event) -> Unit
     ) {
         initLocationProvider(activity, eventCallback, rationale)
@@ -33,7 +32,7 @@ object Locator {
                                      eventCallback: (Event) -> Unit,
                                      locationPermissionRationaleMessage: LocationPermissionRationaleMessage?
     ) {
-        if (!Locator::locationProvider.isInitialized) {
+        if (!::locationProvider.isInitialized) {
             val locationProviderType = if (isGooglePlayServicesAvailable(activity)) LocationDelegate.GOOGLE else LocationDelegate.HUAWEI
             locationProvider = LocationProvider(activity, eventCallback, locationProviderType, locationPermissionRationaleMessage)
         }
