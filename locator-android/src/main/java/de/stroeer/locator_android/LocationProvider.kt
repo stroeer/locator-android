@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import com.example.tomo_location.Logger
+import java.lang.Exception
 import com.google.android.gms.location.FusedLocationProviderClient as GoogleFLPC
 import com.google.android.gms.location.LocationServices as GoogleLocationServices
 import com.huawei.hms.location.FusedLocationProviderClient as HuaweiFLPC
@@ -57,13 +58,9 @@ class LocationProvider(
         }
     }
 
-    // TODO should we call it externally?
-    fun stopService() {
-        // unregister receiver if it's registered
-        val intentForQuery = LocationPermissionBroadcastReceiver.getIntentForQuery()
-        val resolveInfo = activity.packageManager.queryBroadcastReceivers(intentForQuery, 0)
-        if (resolveInfo.isNotEmpty()) {
-            activity.unregisterReceiver(locationPermissionBroadcastReceiver)
+    private fun stopService() {
+        try { activity.unregisterReceiver(locationPermissionBroadcastReceiver) } catch (e: Exception) {
+            Logger.logDebug("Failed to unregister broadcast receiver")
         }
 
         // stop searching
@@ -74,7 +71,7 @@ class LocationProvider(
     }
 
     fun startLocationDiscoveryOrStartPermissionResolution() {
-        activity.application.registerReceiver(locationPermissionBroadcastReceiver, filter)
+        activity.registerReceiver(locationPermissionBroadcastReceiver, filter)
         startPermissionAndResolutionProcess(activity)
     }
 

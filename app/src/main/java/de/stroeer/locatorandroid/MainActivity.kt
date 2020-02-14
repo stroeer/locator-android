@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationDiscoveryProcess() {
         val permissionRationale = getLocationPermissionRationale()
-        Locator.getCurrentLocation(this, permissionRationale) { locationEvent ->
+        Locator(this).getCurrentLocation(permissionRationale) { locationEvent ->
             when (locationEvent) {
                 is Event.Location -> handleLocationEvent(locationEvent)
                 is Event.Permission -> handlePermissionEvent(locationEvent)
