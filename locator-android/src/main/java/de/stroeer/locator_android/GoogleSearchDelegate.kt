@@ -78,7 +78,8 @@ class GoogleSearchDelegate(val activity: Activity,
     }
 
     private fun isLocationDisabled(): Boolean {
-        val locationManager: LocationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationService = activity.getSystemService(Context.LOCATION_SERVICE) ?: return true
+        val locationManager = locationService as LocationManager
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             !locationManager.isLocationEnabled
         } else {
