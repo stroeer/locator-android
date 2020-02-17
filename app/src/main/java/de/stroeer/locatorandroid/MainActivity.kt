@@ -18,11 +18,24 @@ class MainActivity : AppCompatActivity() {
         btn_get_location.setOnClickListener {
             startLocationDiscoveryProcess()
         }
+
+        btn_get_location_silently.setOnClickListener {
+            startSilentLocationDiscoveryProcess()
+        }
     }
 
     private fun startLocationDiscoveryProcess() {
         val permissionRationale = getLocationPermissionRationale()
         Locator(this).getCurrentLocation(permissionRationale) { locationEvent ->
+            when (locationEvent) {
+                is Event.Location -> handleLocationEvent(locationEvent)
+                is Event.Permission -> handlePermissionEvent(locationEvent)
+            }
+        }
+    }
+
+    private fun startSilentLocationDiscoveryProcess() {
+        Locator(this).getCurrentLocationSilently { locationEvent ->
             when (locationEvent) {
                 is Event.Location -> handleLocationEvent(locationEvent)
                 is Event.Permission -> handlePermissionEvent(locationEvent)
