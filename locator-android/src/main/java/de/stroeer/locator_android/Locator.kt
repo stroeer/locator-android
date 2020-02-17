@@ -28,6 +28,11 @@ class Locator(val activity: AppCompatActivity) {
         locationProvider.startLocationDiscoveryOrStartPermissionResolution()
     }
 
+    fun getCurrentLocationSilently(eventCallback: (Event) -> Unit) {
+        initLocationProvider(activity, eventCallback, null)
+        locationProvider.startSilentLocationDiscovery()
+    }
+
     private fun initLocationProvider(activity: AppCompatActivity,
                                      eventCallback: (Event) -> Unit,
                                      locationPermissionRationaleMessage: LocationPermissionRationaleMessage?
