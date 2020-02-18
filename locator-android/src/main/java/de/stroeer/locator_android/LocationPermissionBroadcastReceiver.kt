@@ -41,6 +41,7 @@ class LocationPermissionBroadcastReceiver(private val locationPermissionCallback
         if (intent.action == LOCATION_PERMISSION_ACTION) {
             val locationPermissionEvent = intent.getSerializableExtra(LOCATION_PERMISSION_EXTRA) as LocationPermissionEvent
             locationPermissionCallback?.invoke( locationPermissionEvent )
+            context?.unregisterReceiver(this)
         }
     }
 }
