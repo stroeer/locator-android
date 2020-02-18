@@ -26,6 +26,7 @@ class LocationProvider(
         const val EXTRA_LOCATION_PERMISSION_RESOLUTION_NECESSARY = "EXTRA_LOCATION_PERMISSION_RESOLUTION_NECESSARY"
     }
 
+    private var broadcastReceiverRegistered: Boolean = false
     private val googleFusedLocationClient: GoogleFLPC by lazy {
         GoogleLocationServices.getFusedLocationProviderClient(activity)
     }
@@ -76,7 +77,10 @@ class LocationProvider(
      *  Start permission resolution process if necessary and then try to find location
      */
     fun startLocationDiscoveryOrStartPermissionResolution() {
-        activity.registerReceiver(locationPermissionBroadcastReceiver, filter)
+        if (!broadcastReceiverRegistered) {
+            activity.registerReceiver(locationPermissionBroadcastReceiver, filter)
+            broadcastReceiverRegistered = true
+        }
         startPermissionAndResolutionProcess(activity)
     }
 
