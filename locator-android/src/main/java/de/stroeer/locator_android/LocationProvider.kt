@@ -1,5 +1,6 @@
 package de.stroeer.locator_android
 
+import android.Manifest
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
@@ -22,6 +23,7 @@ class LocationProvider(
 
     companion object {
         const val EXTRA_LOCATION_PERMISSION_RATIONALE = "EXTRA_LOCATION_PERMISSION_RATIONALE"
+        const val EXTRA_LOCATION_PERMISSION_RESOLUTION_NECESSARY = "EXTRA_LOCATION_PERMISSION_RESOLUTION_NECESSARY"
     }
 
     private val googleFusedLocationClient: GoogleFLPC by lazy {
@@ -70,9 +72,25 @@ class LocationProvider(
         }
     }
 
+    /**
+     *  Start permission resolution process if necessary and then try to find location
+     */
     fun startLocationDiscoveryOrStartPermissionResolution() {
         activity.registerReceiver(locationPermissionBroadcastReceiver, filter)
         startPermissionAndResolutionProcess(activity)
+    }
+
+    /**
+     *  Try to find location silently; throw error if permissions not granted
+     */
+    fun startSilentLocationDiscovery() {
+        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+        val unresolvedPermissions = LocationPermissionHelper(permissions).unresolvedPermissions(activity)
+        if (unresolvedPermissions.isEmpty()) {
+            getLastLocation()
+        } else {
+            eventCallback(Event.Permission(EventType.LOCATION_PERMISSION_NOT_GRANTED))
+        }
     }
 
     private fun getLastLocation() {
