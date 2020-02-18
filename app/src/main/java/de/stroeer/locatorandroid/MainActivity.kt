@@ -11,9 +11,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var locator: Locator
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        locator = Locator(this)
 
         btn_get_location.setOnClickListener {
             startLocationDiscoveryProcess()
@@ -26,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationDiscoveryProcess() {
         val permissionRationale = getLocationPermissionRationale()
-        Locator(this).getCurrentLocation(permissionRationale) { locationEvent ->
+        locator.getCurrentLocation(permissionRationale) { locationEvent ->
             when (locationEvent) {
                 is Event.Location -> handleLocationEvent(locationEvent)
                 is Event.Permission -> handlePermissionEvent(locationEvent)
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startSilentLocationDiscoveryProcess() {
-        Locator(this).getCurrentLocationSilently { locationEvent ->
+        locator.getCurrentLocationSilently { locationEvent ->
             when (locationEvent) {
                 is Event.Location -> handleLocationEvent(locationEvent)
                 is Event.Permission -> handlePermissionEvent(locationEvent)
