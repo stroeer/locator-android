@@ -6,7 +6,6 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import com.example.tomo_location.Logger
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 
@@ -20,13 +19,14 @@ class GoogleSearchDelegate(val activity: Activity,
                 super.onLocationResult(locationResult)
                 locationResult?.lastLocation?.let { location ->
                     eventCallback(Event.Location(location))
+                    stopSearchForCurrentLocation()
                 }
             }
 
             override fun onLocationAvailability(locationAvailability: LocationAvailability?) {
                 super.onLocationAvailability(locationAvailability)
                 if (locationAvailability == null || !locationAvailability.isLocationAvailable) {
-                    Logger.logDebug("onLocationAvailability(${locationAvailability?.isLocationAvailable})")
+                    Logger.logDebug("GoogleSearchDelegate: onLocationAvailability(${locationAvailability?.isLocationAvailable})")
                     onLocationNotFound()
                 }
             }
@@ -61,7 +61,7 @@ class GoogleSearchDelegate(val activity: Activity,
             }
 
             override fun onConnectionSuspended(cause: Int) {
-                Logger.logDebug("LocationModule.onConnectionSuspended($cause)")
+                Logger.logDebug("GoogleSearchDelegate: onConnectionSuspended($cause)")
             }
         }
     }
@@ -70,7 +70,7 @@ class GoogleSearchDelegate(val activity: Activity,
         GoogleApiClient.Builder(activity)
             .addConnectionCallbacks(googleApiClientConnectionCallback)
             .addOnConnectionFailedListener { connectionResult ->
-                Logger.logDebug("Connection failed: $connectionResult")
+                Logger.logDebug("GoogleSearchDelegate: Connection failed: $connectionResult")
                 onLocationNotFound()
             }
             .addApi(LocationServices.API)

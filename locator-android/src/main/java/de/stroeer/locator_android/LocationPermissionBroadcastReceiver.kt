@@ -27,18 +27,12 @@ class LocationPermissionBroadcastReceiver(private val locationPermissionCallback
             }
         }
 
-        fun getIntentForQuery(): Intent {
-            return Intent().apply {
-                action = LOCATION_PERMISSION_ACTION
-                addCategory(Intent.CATEGORY_DEFAULT)
-            }
-        }
-
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
         intent ?: return
         if (intent.action == LOCATION_PERMISSION_ACTION) {
+            Logger.logDebug("LocationPermissionBroadcastReceiver: onReceive()")
             val locationPermissionEvent = intent.getSerializableExtra(LOCATION_PERMISSION_EXTRA) as LocationPermissionEvent
             locationPermissionCallback?.invoke( locationPermissionEvent )
             context?.unregisterReceiver(this)

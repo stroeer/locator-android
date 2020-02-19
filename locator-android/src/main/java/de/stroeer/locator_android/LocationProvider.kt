@@ -5,8 +5,6 @@ import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
-import com.example.tomo_location.Logger
-import java.lang.Exception
 import com.google.android.gms.location.FusedLocationProviderClient as GoogleFLPC
 import com.google.android.gms.location.LocationServices as GoogleLocationServices
 import com.huawei.hms.location.FusedLocationProviderClient as HuaweiFLPC
@@ -72,21 +70,28 @@ class LocationProvider(
      *  Start permission resolution process if necessary and then try to find location
      */
     fun startLocationDiscoveryOrStartPermissionResolution() {
-        activity.registerReceiver(locationPermissionBroadcastReceiver, filter)
-        startPermissionAndResolutionProcess(activity)
+        if (getUnresolvedPermissions().isEmpty()) {
+            getLastLocation()
+        } else {
+            activity.registerReceiver(locationPermissionBroadcastReceiver, filter)
+            startPermissionAndResolutionProcess(activity)
+        }
     }
 
     /**
      *  Try to find location silently; throw error if permissions not granted
      */
     fun startSilentLocationDiscovery() {
-        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-        val unresolvedPermissions = LocationPermissionHelper(permissions).unresolvedPermissions(activity)
-        if (unresolvedPermissions.isEmpty()) {
+        if (getUnresolvedPermissions().isEmpty()) {
             getLastLocation()
         } else {
             eventCallback(Event.Permission(EventType.LOCATION_PERMISSION_NOT_GRANTED))
         }
+    }
+
+    private fun getUnresolvedPermissions(): List<InternalPermissionType> {
+        val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+        return LocationPermissionHelper(permissions).unresolvedPermissions(activity)
     }
 
     private fun getLastLocation() {
@@ -128,12 +133,12 @@ class LocationProvider(
                     stopService()
                 } else {
                     // fallback to active location discovery
-                    Logger.logDebug("Last known location is null")
+                    Logger.logDebug("LocationProvider (Google): Last known location is null")
                     googleLocationSearchDelegate.startSearchForCurrentLocation()
                 }
             }
             .addOnFailureListener { e ->
-                Logger.logDebug(e.message)
+                Logger.logDebug("LocationProvider: ${e.message}")
                 googleLocationSearchDelegate.startSearchForCurrentLocation()
             }
     }
@@ -153,12 +158,12 @@ class LocationProvider(
                     stopService()
                 } else {
                     // fallback to active location discovery
-                    Logger.logDebug("Last known location is null")
+                    Logger.logDebug("LocationProvider (Huawei): Last known location is null")
                     huaweiLocationSearchDelegate.startSearchForCurrentLocation()
                 }
             }
             .addOnFailureListener { e ->
-                Logger.logDebug(e.message)
+                Logger.logDebug("LocationProvider: ${e.message}")
                 huaweiLocationSearchDelegate.startSearchForCurrentLocation()
             }
     }

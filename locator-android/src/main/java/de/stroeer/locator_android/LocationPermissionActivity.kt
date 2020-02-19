@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import de.stroeer.locator_android.LocationProvider.Companion.EXTRA_LOCATION_PERMISSION_RATIONALE
-import com.example.tomo_location.Logger
 
 class LocationPermissionActivity  : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -49,7 +48,7 @@ class LocationPermissionActivity  : AppCompatActivity(), ActivityCompat.OnReques
     }
 
     private fun onLocationDisabled() {
-        Logger.logDebug("onLocationDisabled()")
+        Logger.logDebug("LocationPermissionActivity: onLocationDisabled()")
         AlertDialog.Builder(this)
             .setTitle(permissionRationaleMessage.rationaleTitle)
             .setMessage(permissionRationaleMessage.rationaleMessage)
@@ -70,7 +69,7 @@ class LocationPermissionActivity  : AppCompatActivity(), ActivityCompat.OnReques
     }
 
     private fun onPermissionGranted() {
-        Logger.logDebug("LocationPermissionActivity: onLocationDisabled()")
+        Logger.logDebug("LocationPermissionActivity: onPermissionGranted()")
         broadcastPermissionEvent(LocationPermissionEvent.LOCATION_PERMISSION_GRANTED)
     }
 
