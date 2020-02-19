@@ -1,4 +1,4 @@
-package com.example.tomo_location
+package de.stroeer.locator_android
 
 import android.util.Log
 

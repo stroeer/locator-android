@@ -58,12 +58,15 @@ class MainActivity : AppCompatActivity() {
         when (permissionEvent.event) {
             EventType.LOCATION_PERMISSION_GRANTED -> {
                 showToast("Permission granted")
+                de.stroeer.locator_android.Logger.logDebug("Permission granted")
             }
             EventType.LOCATION_PERMISSION_NOT_GRANTED -> {
                 showToast("Permission NOT granted")
+                de.stroeer.locator_android.Logger.logDebug("Permission NOT granted")
             }
             EventType.LOCATION_DISABLED_ON_DEVICE -> {
                 showToast("Permission NOT granted permanently")
+                de.stroeer.locator_android.Logger.logDebug("Permission NOT granted permanently")
             }
         }
     }
