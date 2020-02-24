@@ -58,7 +58,7 @@ class LocationProvider(
         }
     }
 
-    private fun stopService() {
+    fun stopService() {
         // stop searching
         when (locationDelegateType) {
             LocationDelegate.GOOGLE -> googleLocationSearchDelegate.stopSearchForCurrentLocation()
