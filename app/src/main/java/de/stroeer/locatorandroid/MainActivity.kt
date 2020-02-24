@@ -2,6 +2,7 @@ package de.stroeer.locatorandroid
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import de.stroeer.locator_android.Event
 import de.stroeer.locator_android.EventType
@@ -24,7 +25,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_get_location_silently.setOnClickListener {
-            startSilentLocationDiscoveryProcess()
+            //startSilentLocationDiscoveryProcess()
+            val x = LocRetriever.getUserCountry(this)
+            Log.d("", x)
         }
     }
 
