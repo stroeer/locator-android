@@ -5,18 +5,14 @@ import android.content.Context
 import android.content.IntentSender
 import android.location.LocationManager
 import android.os.Build
-import android.os.Bundle
 import android.os.Looper
-import com.google.android.gms.common.api.GoogleApiClient
 import com.huawei.hms.location.*
 
 class HuaweiSearchDelegate(val activity: Activity,
                            val eventCallback: (Event) -> Unit,
                            val huaweiFusedLocationClient: FusedLocationProviderClient) {
 
-    private val REQUEST_CHECK_SETTINGS = 0x1
-
-    val locationCallback by lazy {
+    private val locationCallback by lazy {
         object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 super.onLocationResult(locationResult)
@@ -40,61 +36,19 @@ class HuaweiSearchDelegate(val activity: Activity,
         if (isLocationDisabled()) {
             return
         }
-        huaweiApiClient.connect()
+        val locationRequest = LocationRequest.create()
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+            .setInterval(10 * 1000)        // 10 seconds, in milliseconds
+            .setFastestInterval(1 * 1000)
+
+        huaweiFusedLocationClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.getMainLooper())
     }
 
     fun stopSearchForCurrentLocation() {
-        huaweiApiClient.unregisterConnectionCallbacks(huaweiApiClientConnectionCallback)
-        huaweiApiClient.disconnect()
         huaweiFusedLocationClient.removeLocationUpdates(locationCallback)
-    }
-
-    private val huaweiApiClientConnectionCallback by lazy {
-        object : com.huawei.hms.support.api.client.ResultCallback<LocationSettingsResult>, GoogleApiClient.ConnectionCallbacks {
-
-            override fun onConnected(var1: Bundle?) {
-                val locationRequest = LocationRequest.create()
-                    .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                    .setInterval(10 * 1000)        // 10 seconds, in milliseconds
-                    .setFastestInterval(1 * 1000)
-
-                huaweiFusedLocationClient.requestLocationUpdates(
-                    locationRequest,
-                    locationCallback,
-                    Looper.getMainLooper())
-            }
-
-            override fun onConnectionSuspended(cause: Int) {
-                Logger.logDebug("HuaweiSearchDelegate: onConnectionSuspended($cause)")
-            }
-
-            override fun onResult(locationSettingsResult: LocationSettingsResult) {
-                val status = locationSettingsResult.status
-                when (status.statusCode) {
-                    LocationSettingsStatusCodes.SUCCESS -> {/* Location settings are satisfied. startListeningOnLocationUpdates() */ }
-                    LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
-                        /* Location settings not satisfied. Show the user a dialog to upgrade location settings. */
-                        try {
-                            status.startResolutionForResult(activity, REQUEST_CHECK_SETTINGS)
-                        } catch (e: IntentSender.SendIntentException) {
-                            Logger.logDebug("HuaweiSearchDelegate: PendingIntent unable to execute request.")
-                        }
-                    }
-                    LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> { /* Location settings are inadequate, and cannot be fixed here. */ }
-                }
-            }
-        }
-    }
-
-    private val huaweiApiClient: GoogleApiClient by lazy {
-        GoogleApiClient.Builder(activity)
-            .addConnectionCallbacks(huaweiApiClientConnectionCallback)
-            .addOnConnectionFailedListener { connectionResult ->
-                Logger.logDebug("HuaweiSearchDelegate: Connection failed: $connectionResult")
-                onLocationNotFound()
-            }
-            .addApi(com.google.android.gms.location.LocationServices.API)
-            .build()
     }
 
     private fun isLocationDisabled(): Boolean {
