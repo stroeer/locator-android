@@ -25,9 +25,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_get_location_silently.setOnClickListener {
-            //startSilentLocationDiscoveryProcess()
-            val x = LocRetriever.getUserCountry(this)
-            Log.d("", x)
+            startSilentLocationDiscoveryProcess()
         }
     }
 
