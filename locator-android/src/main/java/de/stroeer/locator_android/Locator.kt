@@ -47,7 +47,7 @@ class Locator(val activity: AppCompatActivity) {
         GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS
 
     fun stopService() {
-        if (!::locationProvider.isInitialized) {
+        if (::locationProvider.isInitialized) {
             locationProvider.stopService()
         }
     }
