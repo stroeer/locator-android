@@ -77,5 +77,5 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:${gServicesVersion}"
 
     // huawei
-    implementation 'com.huawei.hms:location:4.0.0.300'
+    implementation 'com.huawei.hms:location:4.0.3.301'
 }
