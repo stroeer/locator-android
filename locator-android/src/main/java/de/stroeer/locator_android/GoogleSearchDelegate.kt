@@ -15,17 +15,17 @@ class GoogleSearchDelegate(val activity: Activity,
 
     val locationCallback by lazy {
         object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
+            override fun onLocationResult(locationResult: LocationResult) {
                 super.onLocationResult(locationResult)
-                locationResult?.lastLocation?.let { location ->
+                locationResult.lastLocation.let { location ->
                     eventCallback(Event.Location(location))
                     stopSearchForCurrentLocation()
                 }
             }
 
-            override fun onLocationAvailability(locationAvailability: LocationAvailability?) {
+            override fun onLocationAvailability(locationAvailability: LocationAvailability) {
                 super.onLocationAvailability(locationAvailability)
-                if (locationAvailability == null || !locationAvailability.isLocationAvailable) {
+                if (!locationAvailability.isLocationAvailable) {
                     Logger.logDebug("GoogleSearchDelegate: onLocationAvailability(${locationAvailability?.isLocationAvailable})")
                     onLocationNotFound()
                 }
