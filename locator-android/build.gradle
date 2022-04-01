@@ -3,15 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 32
     buildToolsVersion "29.0.2"
 
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion 21
+        targetSdkVersion 32
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -48,11 +48,11 @@ android {
 
 buildscript {
     ext.googleServicesVersion = '4.2.0'
-    ext.gServicesVersion = '17.0.0'
+    ext.gServicesVersion = '19.0.1'
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'http://developer.huawei.com/repo/' }
     }
     dependencies {
@@ -63,15 +63,15 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url 'http://developer.huawei.com/repo/' }
     }
 }
 
 dependencies {
     // required to show permission activity
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.5.0'
 
     // google
     implementation "com.google.android.gms:play-services-location:${gServicesVersion}"
