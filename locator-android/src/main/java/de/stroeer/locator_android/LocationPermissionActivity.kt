@@ -6,12 +6,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.Settings
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import de.stroeer.locator_android.LocationProvider.Companion.EXTRA_LOCATION_PERMISSION_RATIONALE
 
-class LocationPermissionActivity  : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
+class LocationPermissionActivity  : ComponentActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
 
     private val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     private lateinit var permissionRationaleMessage: LocationPermissionRationaleMessage

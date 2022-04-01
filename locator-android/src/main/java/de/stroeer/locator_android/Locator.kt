@@ -1,7 +1,7 @@
 package de.stroeer.locator_android
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.ComponentActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import java.lang.Exception
@@ -17,7 +17,7 @@ enum class EventType {
     LOCATION_DISABLED_ON_DEVICE
 }
 
-class Locator(val activity: AppCompatActivity) {
+class Locator(val activity: ComponentActivity) {
 
     private lateinit var locationProvider: LocationProvider
 
@@ -33,7 +33,7 @@ class Locator(val activity: AppCompatActivity) {
         locationProvider.startSilentLocationDiscovery()
     }
 
-    private fun initLocationProvider(activity: AppCompatActivity,
+    private fun initLocationProvider(activity: ComponentActivity,
                                      eventCallback: (Event) -> Unit,
                                      locationPermissionRationaleMessage: LocationPermissionRationaleMessage?
     ) {
