@@ -11,37 +11,26 @@ android {
         minSdkVersion 21
         targetSdkVersion 32
         versionCode 1
-        versionName "0.0.11"
+        versionName "0.1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
-        // TODO fix this mess
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        qa {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+
+    flavorDimensions "distribution"
+    productFlavors {
+        google {
+            versionNameSuffix ""
         }
-        master {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        stage {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        sdi {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        huawei {
+            versionNameSuffix "-hw"
         }
     }
 }
@@ -77,5 +66,5 @@ dependencies {
     implementation "com.google.android.gms:play-services-location:${gServicesVersion}"
 
     // huawei
-    implementation 'com.huawei.hms:location:4.0.3.301'
+    huaweiImplementation 'com.huawei.hms:location:4.0.3.301'
 }

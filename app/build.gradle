@@ -21,6 +21,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "distribution"
+    productFlavors {
+        google {
+            versionNameSuffix ""
+        }
+        huawei {
+            versionNameSuffix "-hw"
+        }
+    }
 }
 
 dependencies {

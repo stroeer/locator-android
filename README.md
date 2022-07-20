@@ -1,6 +1,7 @@
 # Getting location on Android
 
 This lib is an easy way to get the location inside Android applications. The new thing about it, it either uses Google Play Services (if installed) or Huawei Mobile Services (https://developer.huawei.com/consumer/en/service/hms/locationservice.html).
+Product flavor implemented in order to separate Location SDKs (Google - Huawei)
 
 ## Location use cases
 
