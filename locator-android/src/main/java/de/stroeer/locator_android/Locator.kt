@@ -38,7 +38,7 @@ class Locator(val activity: ComponentActivity) {
                                      locationPermissionRationaleMessage: LocationPermissionRationaleMessage?
     ) {
         if (!::locationProvider.isInitialized) {
-            val locationProviderType = if (isGooglePlayServicesAvailable(activity)) LocationDelegate.GOOGLE else LocationDelegate.HUAWEI
+            val locationProviderType = LocationDelegate.GOOGLE
             locationProvider = LocationProvider(activity, eventCallback, locationProviderType, locationPermissionRationaleMessage)
         }
     }

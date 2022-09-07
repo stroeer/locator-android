@@ -1,7 +1,6 @@
 # Getting location on Android
 
-This lib is an easy way to get the location inside Android applications. The new thing about it, it either uses Google Play Services (if installed) or Huawei Mobile Services (https://developer.huawei.com/consumer/en/service/hms/locationservice.html).
-Product flavor implemented in order to separate Location SDKs (Google - Huawei)
+This lib is an easy way to get the location inside Android applications. The new thing about it, it uses Google Play Services.
 
 ## Location use cases
 
@@ -72,13 +71,13 @@ The location cannot be used inside application.
 
 buildscript {
     repositories {
-        maven {url 'http://developer.huawei.com/repo/'}
+        
     }
 }
 
 allprojects {
     repositories {
-        maven { url 'http://developer.huawei.com/repo/' }
+        
     }
 }
 ```
@@ -125,7 +124,7 @@ background, you need to apply for the `ACCESS_BACKGROUND_LOCATION` permission in
 
 Define text resources when asking the user for permissions:
 
-This lib is an easy way to get the location inside Android applications. The new thing about it, it either uses Google Play Services (if installed) or Huawei Mobile Services.
+This lib is an easy way to get the location inside Android applications.
 
 ## Integration steps
 

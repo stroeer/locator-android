@@ -27,9 +27,6 @@ android {
         google {
             versionNameSuffix ""
         }
-        huawei {
-            versionNameSuffix "-hw"
-        }
     }
 }
 

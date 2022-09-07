@@ -8,7 +8,7 @@ import android.content.Intent
 import com.google.android.gms.location.FusedLocationProviderClient as GoogleFLPC
 import com.google.android.gms.location.LocationServices as GoogleLocationServices
 
-enum class LocationDelegate { GOOGLE, HUAWEI }
+enum class LocationDelegate { GOOGLE }
 
 class LocationProvider(
     val activity: Activity,
