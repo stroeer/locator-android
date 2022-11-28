@@ -1,7 +1,6 @@
 package de.stroeer.locator_android
 
 import android.Manifest
-import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
@@ -11,7 +10,7 @@ import com.google.android.gms.location.LocationServices as GoogleLocationService
 enum class LocationDelegate { GOOGLE }
 
 class LocationProvider(
-    val activity: Activity,
+    val activity: Context,
     val eventCallback: (Event) -> Unit,
     private val locationDelegateType: LocationDelegate,
     private val locationPermissionRationaleMessage: LocationPermissionRationaleMessage?

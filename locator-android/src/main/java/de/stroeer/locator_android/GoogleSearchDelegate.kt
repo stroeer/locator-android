@@ -1,6 +1,5 @@
 package de.stroeer.locator_android
 
-import android.app.Activity
 import android.content.Context
 import android.location.LocationManager
 import android.os.Build
@@ -9,7 +8,7 @@ import android.os.Looper
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 
-class GoogleSearchDelegate(val activity: Activity,
+class GoogleSearchDelegate(val activity: Context,
                            val eventCallback: (Event) -> Unit,
                            val googleFusedLocationClient: FusedLocationProviderClient) {
 

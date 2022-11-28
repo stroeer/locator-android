@@ -5,6 +5,7 @@
 
     <application>
         <activity
+            android:exported="true"
             android:name=".LocationPermissionActivity"
             android:launchMode="singleTask"
             android:theme="@style/LocationPermissionActivityTheme" />
